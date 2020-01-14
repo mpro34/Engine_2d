@@ -1,17 +1,21 @@
 build:
 	g++ -w -std=c++14 -Wfatal-errors \
 	./src/*.cpp \
-	-o game \
-	-I"./lib/lua" \
-	-L"./lib/lua" \
-	-llua \
-	-lSDL2 \
+	-o game.exe \
+	-I"C:\libsdl\SDL2\include" \
+	-L"C:\libsdl\SDL2\lib" \
+	-I".\lib\lua" \
+	-L".\lib\lua" \
+	-llua53 \
+	-lmingw32 \
+	-lSDL2main \
 	-lSDL2_image \
 	-lSDL2_ttf \
-	-lSDL2_mixer;
+	-lSDL2_mixer \
+	-lSDL2
 
 clean:
-	rm ./game;
+	rm game.exe
 
 run:
-	./game;
+	./game.exe
