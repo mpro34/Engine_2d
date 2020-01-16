@@ -1,15 +1,16 @@
 #include <iostream>
 #include "Constants.h"
 #include "Game.h"
-#include "EntityManager.h"
+#include "Components/TransformComponent.h"
 #include "../lib/glm/glm.hpp"
+
+class EntityManager;
 
 EntityManager manager;
 SDL_Renderer* Game::renderer;
 
 Game::Game() {
   this->isRunning_ = false;
-  this->ticks_last_frame = 0;
 }
 
 Game::~Game() {
@@ -44,8 +45,15 @@ void Game::Initialize(int width, int height) {
     return;
   }
 
+  LoadLevel(0);
+
   this->isRunning_ = true;
   return;
+}
+
+void Game::LoadLevel(int level_number) {
+  Entity& new_entity(manager.AddEntity("projectile"));
+  new_entity.AddComponent<TransformComponent>(0, 0, 20, 20, 32, 32, 1);
 }
 
 void Game::ProcessInput() {
@@ -81,7 +89,7 @@ void Game::Update() {
   // Sets the new ticks for the current frame to be used in the next pass
   ticks_last_frame = SDL_GetTicks();
 
-  // TODO: Call the manager.update to update all entities as a function of delta time
+  manager.Update(delta_time);
 
 }
 
@@ -92,7 +100,9 @@ void Game::Render() {
   SDL_RenderClear(renderer); 
 
   /* Draw all game objects of the scene*/
-  // TODO: Call the manager.render to render all entities
+  if (manager.HasNoEntities()) return;
+
+  manager.Render();
 
   SDL_RenderPresent(renderer);
 }

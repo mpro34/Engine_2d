@@ -1,9 +1,9 @@
 #ifndef TRANSFORMCOMPONENT_H_
 #define TRANSFORMCOMPONENT_H_
 
+#include <SDL2/SDL.h>
 #include "../EntityManager.h"
 #include "../../lib/glm/glm.hpp"
-#include <SDL2/SDL.h>
 #include "../Game.h"
 
 class TransformComponent : public Component {
@@ -32,7 +32,7 @@ class TransformComponent : public Component {
     }
 
     void Render() override {
-      SDL_Rect transformRectable = {
+      SDL_Rect transformRectangle = {
         (int) position.x,
         (int) position.y,
         width, 
@@ -44,6 +44,6 @@ class TransformComponent : public Component {
 
     }
 
-}
+};
 
 #endif // TRANSFORMCOMPONENT_H_
