@@ -47,13 +47,22 @@ void Game::Initialize(int width, int height) {
 
   LoadLevel(0);
 
+  manager.ListAllEntities();
+
   this->isRunning_ = true;
   return;
 }
 
 void Game::LoadLevel(int level_number) {
-  Entity& new_entity(manager.AddEntity("projectile"));
-  new_entity.AddComponent<TransformComponent>(0, 0, 20, 20, 32, 32, 1);
+  Entity& projectileA(manager.AddEntity("projectileA"));
+  projectileA.AddComponent<TransformComponent>(0, 0, 20, 20, 32, 32, 1);
+  // TODO: Add another rectagle entity moving top right to bottom left
+
+  Entity& projectileB(manager.AddEntity("projectileB"));
+  projectileB.AddComponent<TransformComponent>(300, 0, 40, 5, 15, 15, 1);
+
+  Entity& projectileC(manager.AddEntity("projectileC"));
+  projectileC.AddComponent<TransformComponent>(50, 500, 80, -20, 40, 40, 1);
 }
 
 void Game::ProcessInput() {
