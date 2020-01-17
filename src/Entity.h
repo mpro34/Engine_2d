@@ -41,6 +41,16 @@ class Entity {
     T* GetComponent() {
       return static_cast<T*>(component_type_map[&typeid(T)]);
     }
+
+    template <typename T>
+    bool HasComponent() const {
+      for (auto& map_element : component_type_map) {
+        if (&typeid(T) == map_element.first) {
+          return true;
+        }
+      }
+      return false;
+    }
 };
 
 #endif // ENTITY_H_

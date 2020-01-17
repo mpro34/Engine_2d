@@ -65,6 +65,7 @@ void Game::LoadLevel(int level_number) {
   Entity& tank(manager.AddEntity("tank"));
   tank.AddComponent<TransformComponent>(0, 0, 20, 20, 32, 32, 1);
   tank.AddComponent<SpriteComponent>("tank-image");
+  std::cout << tank.name << " has sprite component: " << tank.HasComponent<SpriteComponent>() << std::endl; 
 }
 
 void Game::ProcessInput() {

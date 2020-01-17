@@ -30,7 +30,7 @@ bool Entity::IsActive() const {
 }
 
 void Entity::ListAllComponents() const {
-  for (auto& component : components) {
-    std::cout << "  Component<" << component << ">" << std::endl;
+  for (auto& map_element : component_type_map) {
+    std::cout << "  Component<" << map_element.first->name() << ">" << std::endl;
   }
 }
