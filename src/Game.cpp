@@ -58,14 +58,18 @@ void Game::Initialize(int width, int height) {
 
 void Game::LoadLevel(int level_number) {
   /* Start including new assets to the assetmanager */
-  std::string texture_file_path = "assets/images/tank-big-right.png";
-  asset_manager->AddTexture("tank-image", texture_file_path.c_str());
+  asset_manager->AddTexture("tank-image", std::string("assets/images/tank-big-right.png").c_str());
+  asset_manager->AddTexture("chopper-image", std::string("assets/images/chopper-spritesheet.png").c_str());
 
   /* Start including entities and also components to them */
-  Entity& tank(manager.AddEntity("tank"));
-  tank.AddComponent<TransformComponent>(0, 0, 20, 20, 32, 32, 1);
-  tank.AddComponent<SpriteComponent>("tank-image");
-  std::cout << tank.name << " has sprite component: " << tank.HasComponent<SpriteComponent>() << std::endl; 
+  Entity& tankEntity(manager.AddEntity("tank"));
+  tankEntity.AddComponent<TransformComponent>(0, 0, 20, 20, 32, 32, 1);
+  tankEntity.AddComponent<SpriteComponent>("tank-image");
+  std::cout << tankEntity.name << " has sprite component: " << tankEntity.HasComponent<SpriteComponent>() << std::endl; 
+
+  Entity& chopperEntity(manager.AddEntity("chopper"));
+  chopperEntity.AddComponent<TransformComponent>(240, 106, 0, 0, 32, 32, 1);
+  chopperEntity.AddComponent<SpriteComponent>("chopper-image", 2, 90, true, false);
 }
 
 void Game::ProcessInput() {
