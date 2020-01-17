@@ -1,12 +1,15 @@
 #include <iostream>
 #include "Constants.h"
 #include "Game.h"
+#include "AssetManager.h"
 #include "Components/TransformComponent.h"
+#include "Components/SpriteComponent.h"
 #include "../lib/glm/glm.hpp"
 
 class EntityManager;
 
 EntityManager manager;
+AssetManager* Game::asset_manager = new AssetManager(&manager);
 SDL_Renderer* Game::renderer;
 
 Game::Game() {
@@ -54,15 +57,14 @@ void Game::Initialize(int width, int height) {
 }
 
 void Game::LoadLevel(int level_number) {
-  Entity& projectileA(manager.AddEntity("projectileA"));
-  projectileA.AddComponent<TransformComponent>(0, 0, 20, 20, 32, 32, 1);
-  // TODO: Add another rectagle entity moving top right to bottom left
+  /* Start including new assets to the assetmanager */
+  std::string texture_file_path = "assets/images/tank-big-right.png";
+  asset_manager->AddTexture("tank-image", texture_file_path.c_str());
 
-  Entity& projectileB(manager.AddEntity("projectileB"));
-  projectileB.AddComponent<TransformComponent>(300, 0, 40, 5, 15, 15, 1);
-
-  Entity& projectileC(manager.AddEntity("projectileC"));
-  projectileC.AddComponent<TransformComponent>(50, 500, 80, -20, 40, 40, 1);
+  /* Start including entities and also components to them */
+  Entity& tank(manager.AddEntity("tank"));
+  tank.AddComponent<TransformComponent>(0, 0, 20, 20, 32, 32, 1);
+  tank.AddComponent<SpriteComponent>("tank-image");
 }
 
 void Game::ProcessInput() {
