@@ -49,23 +49,23 @@ class KeyboardControlComponent : public Component {
           std::string key_code = std::to_string(Game::event.key.keysym.sym);
           
           if (key_code.compare(upKey) == 0) {
-            transform->velocity.y = -10;
+            transform->velocity.y = -30;
             transform->velocity.x = 0;
             sprite->Play("UpAnimation");
           }
           if (key_code.compare(rightKey) == 0) {
             transform->velocity.y = 0;
-            transform->velocity.x = 10;
+            transform->velocity.x = 30;
             sprite->Play("RightAnimation");
           }
           if (key_code.compare(downKey) == 0) {
-            transform->velocity.y = 10;
+            transform->velocity.y = 30;
             transform->velocity.x = 0;
             sprite->Play("DownAnimation");
           }
           if (key_code.compare(leftKey) == 0) {
             transform->velocity.y = 0;
-            transform->velocity.x = -10;
+            transform->velocity.x = -30;
             sprite->Play("LeftAnimation");
           }
           if (key_code.compare(shootKey) == 0) {

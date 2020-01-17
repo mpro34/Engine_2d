@@ -3,8 +3,8 @@
 
 #pragma once
 
-// #include <SDL2/SDL.h>
 #include "../EntityManager.h"
+#include "../Constants.h"
 #include "../../lib/glm/glm.hpp"
 #include "../Game.h"
 
@@ -30,7 +30,18 @@ class TransformComponent : public Component {
 
     void Update(float delta_time) override {
       position.x += velocity.x * delta_time;
+      if (position.x > WINDOW_WIDTH-width) {  // clamp
+        position.x = WINDOW_WIDTH-width;
+      } else if (position.x < 0) {
+        position.x = 0;
+      }
+
       position.y += velocity.y * delta_time;
+      if (position.y > WINDOW_HEIGHT-height) {  // clamp
+        position.y = WINDOW_HEIGHT-height;
+      } else if (position.y < 0) {
+        position.y = 0;
+      }
     }
 
     void Render() override {
