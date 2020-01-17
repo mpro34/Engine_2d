@@ -1,6 +1,8 @@
 #ifndef SPRITECOMPONENT_H_
 #define SPRITECOMPONENT_H_
 
+#pragma once
+
 #include <SDL2/SDL.h>
 #include "../TextureManager.h"
 #include "../AssetManager.h"

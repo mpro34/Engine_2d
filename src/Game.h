@@ -1,6 +1,8 @@
 #ifndef GAME_H_
 #define GAME_H_
 
+#pragma once
+
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
 #include <SDL2/SDL_ttf.h>
@@ -22,6 +24,7 @@ class Game {
     bool IsRunning() const;
     static SDL_Renderer *renderer;
     static AssetManager* asset_manager;
+    static SDL_Event event;
     void LoadLevel(int levelNumber);
     void Initialize(int width, int height);
     void ProcessInput();

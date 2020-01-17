@@ -1,6 +1,8 @@
 #ifndef COMPONENT_H_
 #define COMPONENT_H_
 
+#pragma once
+
 class Entity;
 
 class Component {

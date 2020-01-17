@@ -1,6 +1,8 @@
 #ifndef ANIMATION_H_
 #define ANIMATION_H_
 
+#pragma once
+
 class Animation {
   public:
     unsigned int index;

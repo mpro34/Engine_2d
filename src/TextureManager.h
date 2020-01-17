@@ -1,6 +1,8 @@
 #ifndef TEXTUREMANAGER_H_
 #define TEXTUREMANAGER_H_
 
+#pragma once
+
 #include "Game.h"
 
 class TextureManager {

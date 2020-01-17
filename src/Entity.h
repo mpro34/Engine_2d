@@ -1,6 +1,8 @@
 #ifndef ENTITY_H_
 #define ENTITY_H_
 
+#pragma once
+
 #include <vector>
 #include <string>
 #include <map>

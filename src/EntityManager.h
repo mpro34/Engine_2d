@@ -1,6 +1,8 @@
 #ifndef ENTITYMANAGER_H_
 #define ENTITYMANAGER_H_
 
+#pragma once
+
 #include "Entity.h"
 #include "Component.h"
 #include <vector>

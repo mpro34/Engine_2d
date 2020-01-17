@@ -1,7 +1,9 @@
 #ifndef TRANSFORMCOMPONENT_H_
 #define TRANSFORMCOMPONENT_H_
 
-#include <SDL2/SDL.h>
+#pragma once
+
+// #include <SDL2/SDL.h>
 #include "../EntityManager.h"
 #include "../../lib/glm/glm.hpp"
 #include "../Game.h"

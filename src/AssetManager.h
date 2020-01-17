@@ -1,6 +1,8 @@
 #ifndef ASSETMANAGER_H_
 #define ASSETMANAGER_H_
 
+#pragma once
+
 #include <string>
 #include <map>
 #include "TextureManager.h"
