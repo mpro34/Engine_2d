@@ -14,6 +14,7 @@ EntityManager manager;
 AssetManager* Game::asset_manager = new AssetManager(&manager);
 SDL_Renderer* Game::renderer;
 SDL_Event Game::event;
+SDL_Rect Game::camera = {0, 0, WINDOW_WIDTH, WINDOW_HEIGHT};
 Map *map;
 
 Game::Game() {
@@ -60,6 +61,8 @@ void Game::Initialize(int width, int height) {
   return;
 }
 
+Entity& player(manager.AddEntity("chopper", PLAYER_LAYER));
+
 void Game::LoadLevel(int level_number) {
   /* Start including new assets to the assetmanager */
   asset_manager->AddTexture("tank-image", std::string("assets/images/tank-big-right.png").c_str());
@@ -70,14 +73,13 @@ void Game::LoadLevel(int level_number) {
   map = new Map("jungle-tile-texture", 2, 32);
   map->LoadMap("assets/tilemaps/jungle.map", 25, 20);  // Path and size of the .map file.
 
-  Entity& chopperEntity(manager.AddEntity("chopper", PLAYER_LAYER));
-  chopperEntity.AddComponent<TransformComponent>(240, 106, 0, 0, 32, 32, 1);
-  chopperEntity.AddComponent<SpriteComponent>("chopper-image", 2, 90, true, false);
-  chopperEntity.AddComponent<KeyboardControlComponent>("up", "right", "down", "left", "space");
+  player.AddComponent<TransformComponent>(240, 106, 0, 0, 32, 32, 1);
+  player.AddComponent<SpriteComponent>("chopper-image", 2, 150, true, false);
+  player.AddComponent<KeyboardControlComponent>("up", "right", "down", "left", "space");
 
   /* Start including entities and also components to them */
   Entity& tankEntity(manager.AddEntity("tank", ENEMY_LAYER));
-  tankEntity.AddComponent<TransformComponent>(0, 0, 20, 20, 32, 32, 1);
+  tankEntity.AddComponent<TransformComponent>(125, 500, 20, 0, 32, 32, 1);
   tankEntity.AddComponent<SpriteComponent>("tank-image");
 
   Entity& radarEntity(manager.AddEntity("Radar", UI_LAYER));
@@ -119,6 +121,8 @@ void Game::Update() {
 
   manager.Update(delta_time);
 
+  HandleCameraMovement();
+
 }
 
 void Game::Render() {
@@ -133,6 +137,18 @@ void Game::Render() {
   manager.Render();
 
   SDL_RenderPresent(renderer);
+}
+
+void Game::HandleCameraMovement() {
+  TransformComponent* main_player_trans = player.GetComponent<TransformComponent>();
+
+  camera.x = main_player_trans->position.x - (WINDOW_WIDTH / 2);
+  camera.y = main_player_trans->position.y - (WINDOW_HEIGHT / 2);
+
+  camera.x = camera.x < 0 ? 0 : camera.x;
+  camera.y = camera.y < 0 ? 0 : camera.y;
+  camera.x = camera.x > camera.w ? camera.w : camera.x;
+  camera.y = camera.y > camera.h ? camera.h : camera.y;
 }
 
 void Game::Destroy() {

@@ -36,7 +36,9 @@ class TileComponent : public Component {
     }
 
     void Update(float delta_time) override {
-      // TODO: Take care of the tile positions based on camera control
+      // Take care of the tile positions based on camera control
+      dest_rect.x = position.x - Game::camera.x;
+      dest_rect.y = position.y - Game::camera.y;
     }
 
     void Render() override {
