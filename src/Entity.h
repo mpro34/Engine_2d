@@ -48,12 +48,7 @@ class Entity {
 
     template <typename T>
     bool HasComponent() const {
-      for (auto& map_element : component_type_map) {
-        if (&typeid(T) == map_element.first) {
-          return true;
-        }
-      }
-      return false;
+      return component_type_map.count(&typeid(T));
     }
 };
 

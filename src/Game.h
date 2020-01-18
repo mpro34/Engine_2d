@@ -33,6 +33,7 @@ class Game {
     void Render();
     void Destroy();
     void HandleCameraMovement();
+    void CheckCollisions();
 };
 
 #endif // GAME_H_
