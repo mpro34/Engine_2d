@@ -40,6 +40,7 @@ class ColliderComponent : public Component {
 
     void Render() override {
       // TODO: Add red bounding box border to show collisions
+      // Enable/Disable with "C" key  - Use collision-texture.png
     }
 
 };
