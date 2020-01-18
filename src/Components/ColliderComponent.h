@@ -38,6 +38,10 @@ class ColliderComponent : public Component {
       dest_rect.y = collider.y - Game::camera.y;
     }
 
+    void Render() override {
+      // TODO: Add red bounding box border to show collisions
+    }
+
 };
 
 #endif // COLLIDERCOMPONENT_H_
