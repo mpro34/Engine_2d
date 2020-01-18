@@ -54,7 +54,7 @@ void Game::Initialize(int width, int height) {
 
   LoadLevel(0);
 
-  manager.ListAllEntities();
+  //manager.ListAllEntities();  // Used for debugging entities
 
   this->isRunning_ = true;
   return;
@@ -70,18 +70,17 @@ void Game::LoadLevel(int level_number) {
   map = new Map("jungle-tile-texture", 2, 32);
   map->LoadMap("assets/tilemaps/jungle.map", 25, 20);  // Path and size of the .map file.
 
-  Entity& chopperEntity(manager.AddEntity("chopper"));
+  Entity& chopperEntity(manager.AddEntity("chopper", PLAYER_LAYER));
   chopperEntity.AddComponent<TransformComponent>(240, 106, 0, 0, 32, 32, 1);
   chopperEntity.AddComponent<SpriteComponent>("chopper-image", 2, 90, true, false);
   chopperEntity.AddComponent<KeyboardControlComponent>("up", "right", "down", "left", "space");
 
   /* Start including entities and also components to them */
-  Entity& tankEntity(manager.AddEntity("tank"));
+  Entity& tankEntity(manager.AddEntity("tank", ENEMY_LAYER));
   tankEntity.AddComponent<TransformComponent>(0, 0, 20, 20, 32, 32, 1);
   tankEntity.AddComponent<SpriteComponent>("tank-image");
-  std::cout << tankEntity.name << " has sprite component: " << tankEntity.HasComponent<SpriteComponent>() << std::endl; 
 
-  Entity& radarEntity(manager.AddEntity("Radar"));
+  Entity& radarEntity(manager.AddEntity("Radar", UI_LAYER));
   radarEntity.AddComponent<TransformComponent>(720, 15, 0, 0, 64, 64, 1);
   radarEntity.AddComponent<SpriteComponent>("radar-image", 8, 150, false, true);
 }
