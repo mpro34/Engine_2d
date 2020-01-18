@@ -16,6 +16,7 @@ AssetManager* Game::asset_manager = new AssetManager(&manager);
 SDL_Renderer* Game::renderer;
 SDL_Event Game::event;
 SDL_Rect Game::camera = {0, 0, WINDOW_WIDTH, WINDOW_HEIGHT};
+bool Game::debug_mode = false;
 Map *map;
 
 Game::Game() {
@@ -76,8 +77,8 @@ void Game::LoadLevel(int level_number) {
 
   player.AddComponent<TransformComponent>(240, 106, 0, 0, 32, 32, 1);
   player.AddComponent<SpriteComponent>("chopper-image", 2, 150, true, false);
-  player.AddComponent<KeyboardControlComponent>("up", "right", "down", "left", "space");
   player.AddComponent<ColliderComponent>("player", 240, 106, 32, 32);
+  player.AddComponent<KeyboardControlComponent>("up", "right", "down", "left", "c", "space");
 
   /* Start including entities and also components to them */
   Entity& tankEntity(manager.AddEntity("tank", ENEMY_LAYER));

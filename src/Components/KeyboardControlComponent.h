@@ -14,6 +14,7 @@ class KeyboardControlComponent : public Component {
     std::string downKey;
     std::string rightKey;
     std::string leftKey;
+    std::string cKey;  // For collider debug mode
     std::string shootKey;
     TransformComponent *transform;
     SpriteComponent *sprite;
@@ -22,11 +23,12 @@ class KeyboardControlComponent : public Component {
 
     }
 
-    KeyboardControlComponent(std::string upKey, std::string rightKey, std::string downKey, std::string leftKey, std::string shootKey) {
+    KeyboardControlComponent(std::string upKey, std::string rightKey, std::string downKey, std::string leftKey, std::string cKey, std::string shootKey) {
       this->upKey = GetSDLKeyStringCode(upKey);
       this->rightKey = GetSDLKeyStringCode(rightKey);
       this->downKey = GetSDLKeyStringCode(downKey);
       this->leftKey = GetSDLKeyStringCode(leftKey);
+      this->cKey = GetSDLKeyStringCode(cKey);
       this->shootKey = GetSDLKeyStringCode(shootKey);
     }
 
@@ -35,6 +37,7 @@ class KeyboardControlComponent : public Component {
       if (key.compare("down") == 0) return "1073741905";
       if (key.compare("left") == 0) return "1073741904";
       if (key.compare("right") == 0) return "1073741903";
+      if (key.compare("c") == 0) return "99";
       if (key.compare("space") == 0) return "32";
       return std::to_string(static_cast<int>(key[0]));
     }
@@ -67,6 +70,9 @@ class KeyboardControlComponent : public Component {
             transform->velocity.y = 0;
             transform->velocity.x = -70;
             sprite->Play("LeftAnimation");
+          }
+          if (key_code.compare(cKey) == 0) {   // Toggle the debug mode collider box.
+            Game::debug_mode = !Game::debug_mode;
           }
           if (key_code.compare(shootKey) == 0) {
               // TODO: Shoot projectiles when 'shoot' key is pressed

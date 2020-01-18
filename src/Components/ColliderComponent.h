@@ -6,6 +6,7 @@
 #include "../Game.h"
 #include "../EntityManager.h"
 #include "TransformComponent.h"
+#include "../AssetManager.h"
 #include <SDL2/SDL.h>
 
 class ColliderComponent : public Component {
@@ -39,10 +40,13 @@ class ColliderComponent : public Component {
     }
 
     void Render() override {
-      // TODO: Add red bounding box border to show collisions
-      // Enable/Disable with "C" key  - Use collision-texture.png
+      // Enable/Disable debug mode with "C" key  - Use collision-texture.png
+      if (Game::debug_mode) {
+        Game::asset_manager->AddTexture("collision-texture", std::string("assets/images/collision-texture.png").c_str());
+        SDL_Texture* texture = Game::asset_manager->GetTexture("collision-texture");
+        TextureManager::Draw(texture, source_rect, dest_rect, SDL_FLIP_NONE);
+      }
     }
-
 };
 
 #endif // COLLIDERCOMPONENT_H_

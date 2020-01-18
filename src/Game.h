@@ -23,9 +23,10 @@ class Game {
     int ticks_last_frame;
     bool IsRunning() const;
     static SDL_Renderer *renderer;
-    static AssetManager* asset_manager;
+    static AssetManager *asset_manager;
     static SDL_Event event;
     static SDL_Rect camera;
+    static bool debug_mode;
     void LoadLevel(int levelNumber);
     void Initialize(int width, int height);
     void ProcessInput();
