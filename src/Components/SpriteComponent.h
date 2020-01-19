@@ -26,8 +26,14 @@ class SpriteComponent : public Component {
     SDL_RendererFlip sprite_flip = SDL_FLIP_NONE;
 
     SpriteComponent(const char* asset_texture_id) {
-      is_animated = false;
-      is_fixed = false;
+      this->is_animated = false;
+      this->is_fixed = false;
+      SetTexture(asset_texture_id);
+    }
+
+    SpriteComponent(std::string asset_texture_id, bool is_fixed) {
+      this->is_animated = false;
+      this->is_fixed = is_fixed;
       SetTexture(asset_texture_id);
     }
 
