@@ -3,6 +3,14 @@
 ----------------------------------------------------
 math.randomseed(os.time())
 
+local current_system_hour = os.date("*t").hour
+local map_texture_asset_id = "terrain-texture-day"
+
+-- Load the day map between 9AM and 9PM, else load the night map.
+if current_system_hour < 9 and current_system_hour > 21 then
+  map_texture_asset_id = "terrain-texture-night"
+end
+
 Level1 = {
     ----------------------------------------------------
     -- Table to define the list of assets
@@ -49,7 +57,7 @@ Level1 = {
     -- table to define the map config variables
     ----------------------------------------------------
     map = {
-        textureAssetId = "terrain-texture-day",
+        textureAssetId = map_texture_asset_id,
         file = "./assets/tilemaps/jungle.map",
         scale = 2,
         tileSize = 32,
@@ -180,7 +188,7 @@ Level1 = {
                 projectileEmitter = {
                     speed = 70,
                     range = 300,
-                    angle = 180,
+                    angle = math.random(360),
                     width = 4,
                     height = 4,
                     shouldLoop = true,
@@ -216,7 +224,7 @@ Level1 = {
                 projectileEmitter = {
                     speed = 70,
                     range = 300,
-                    angle = 90,
+                    angle = math.random(360),
                     width = 4,
                     height = 4,
                     shouldLoop = true,
