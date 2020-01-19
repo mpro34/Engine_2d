@@ -8,6 +8,7 @@
 #include "Components/ColliderComponent.h"
 #include "Components/KeyboardControlComponent.h"
 #include "Components/TextLabelComponent.h"
+#include "Components/ProjectileEmitterComponent.h"
 #include "../lib/glm/glm.hpp"
 
 class EntityManager;
@@ -77,6 +78,7 @@ void Game::LoadLevel(int level_number) {
   asset_manager->AddTexture("radar-image", std::string("assets/images/radar.png").c_str());
   asset_manager->AddTexture("jungle-tile-texture", std::string("assets/tilemaps/jungle.png").c_str());
   asset_manager->AddTexture("heliport-image", std::string("assets/images/heliport.png").c_str());
+  asset_manager->AddTexture("projectile-image", std::string("assets/images/bullet-enemy.png").c_str());
   asset_manager->AddFont("charriot-font", std::string("assets/fonts/charriot.ttf").c_str(), 14);
 
   map = new Map("jungle-tile-texture", 2, 32);
@@ -89,9 +91,15 @@ void Game::LoadLevel(int level_number) {
 
   /* Start including entities and also components to them */
   Entity& tankEntity(manager.AddEntity("tank", ENEMY_LAYER));
-  tankEntity.AddComponent<TransformComponent>(150, 495, 20, 0, 32, 32, 1);
+  tankEntity.AddComponent<TransformComponent>(150, 495, 0, 0, 32, 32, 1);
   tankEntity.AddComponent<SpriteComponent>("tank-image");
   tankEntity.AddComponent<ColliderComponent>("ENEMY", 150, 495, 32, 32);
+
+  Entity& projectile(manager.AddEntity("projectile", PROJECTILE_LAYER));
+  projectile.AddComponent<TransformComponent>(150+16, 495+16, 0, 0, 4, 4, 1);
+  projectile.AddComponent<SpriteComponent>("projectile-image");
+  projectile.AddComponent<ColliderComponent>("PROJECTILE", 150+16, 495+16, 4, 4);
+  projectile.AddComponent<ProjectileEmitterComponent>(50, 270, 200, true);
 
   Entity& heliport(manager.AddEntity("Heliport", VEGETATION_LAYER));
   heliport.AddComponent<TransformComponent>(470, 420, 0, 0, 32, 32, 1);
@@ -171,13 +179,11 @@ void Game::HandleCameraMovement() {
 }
 
 void Game::CheckCollisions() {
-  // std::string collision_tag_type = manager.CheckEntityCollisions(player);
-  // if (collision_tag_type.compare("enemy") == 0) {
-  //   // TODO: do something when collision with an enemy.
-  //   this->isRunning_ = false;
-  // }
   CollisionType collision_type = manager.CheckCollisions();
   if (collision_type == PLAYER_ENEMY_COLLISION) {
+    ProcessGameOver();
+  }
+  if (collision_type == PLAYER_PROJECTILE_COLLISION) {
     ProcessGameOver();
   }
   if (collision_type == PLAYER_LEVEL_COMPLETE_COLLISION) {
