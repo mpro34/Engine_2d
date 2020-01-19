@@ -35,6 +35,8 @@ class Game {
     void Destroy();
     void HandleCameraMovement();
     void CheckCollisions();
+    void ProcessNextLevel(int level_num);
+    void ProcessGameOver();
 };
 
 #endif // GAME_H_

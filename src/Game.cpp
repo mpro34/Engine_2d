@@ -71,20 +71,26 @@ void Game::LoadLevel(int level_number) {
   asset_manager->AddTexture("chopper-image", std::string("assets/images/chopper-spritesheet.png").c_str());
   asset_manager->AddTexture("radar-image", std::string("assets/images/radar.png").c_str());
   asset_manager->AddTexture("jungle-tile-texture", std::string("assets/tilemaps/jungle.png").c_str());
+  asset_manager->AddTexture("heliport-image", std::string("assets/images/heliport.png").c_str());
 
   map = new Map("jungle-tile-texture", 2, 32);
   map->LoadMap("assets/tilemaps/jungle.map", 25, 20);  // Path and size of the .map file.
 
   player.AddComponent<TransformComponent>(240, 106, 0, 0, 32, 32, 1);
   player.AddComponent<SpriteComponent>("chopper-image", 2, 150, true, false);
-  player.AddComponent<ColliderComponent>("player", 240, 106, 32, 32);
+  player.AddComponent<ColliderComponent>("PLAYER", 240, 106, 32, 32);
   player.AddComponent<KeyboardControlComponent>("up", "right", "down", "left", "c", "space");
 
   /* Start including entities and also components to them */
   Entity& tankEntity(manager.AddEntity("tank", ENEMY_LAYER));
-  tankEntity.AddComponent<TransformComponent>(125, 500, 20, 0, 32, 32, 1);
+  tankEntity.AddComponent<TransformComponent>(150, 495, 20, 0, 32, 32, 1);
   tankEntity.AddComponent<SpriteComponent>("tank-image");
-  tankEntity.AddComponent<ColliderComponent>("enemy", 125, 500, 32, 32);
+  tankEntity.AddComponent<ColliderComponent>("ENEMY", 150, 495, 32, 32);
+
+  Entity& heliport(manager.AddEntity("Heliport", VEGETATION_LAYER));
+  heliport.AddComponent<TransformComponent>(470, 420, 0, 0, 32, 32, 1);
+  heliport.AddComponent<SpriteComponent>("heliport-image");
+  heliport.AddComponent<ColliderComponent>("LEVEL_COMPLETE", 470, 420, 32, 32);
 
   Entity& radarEntity(manager.AddEntity("Radar", UI_LAYER));
   radarEntity.AddComponent<TransformComponent>(720, 15, 0, 0, 64, 64, 1);
@@ -156,11 +162,28 @@ void Game::HandleCameraMovement() {
 }
 
 void Game::CheckCollisions() {
-  std::string collision_tag_type = manager.CheckEntityCollisions(player);
-  if (collision_tag_type.compare("enemy") == 0) {
-    // TODO: do something when collision with an enemy.
-    this->isRunning_ = false;
+  // std::string collision_tag_type = manager.CheckEntityCollisions(player);
+  // if (collision_tag_type.compare("enemy") == 0) {
+  //   // TODO: do something when collision with an enemy.
+  //   this->isRunning_ = false;
+  // }
+  CollisionType collision_type = manager.CheckCollisions();
+  if (collision_type == PLAYER_ENEMY_COLLISION) {
+    ProcessGameOver();
   }
+  if (collision_type == PLAYER_LEVEL_COMPLETE_COLLISION) {
+    ProcessNextLevel(1);
+  }
+}
+
+void Game::ProcessNextLevel(int level_num) {
+  std::cout << "Next Level" << std::endl;
+  this->isRunning_ = false;
+}
+
+void Game::ProcessGameOver() {
+  std::cout << "Game Over" << std::endl;
+  this->isRunning_ = false;
 }
 
 void Game::Destroy() {

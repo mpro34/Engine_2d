@@ -60,17 +60,58 @@ void EntityManager::ListAllEntities() const {
   }
 }
 
-std::string EntityManager::CheckEntityCollisions(Entity& my_entity) const {
-  ColliderComponent* my_collider = my_entity.GetComponent<ColliderComponent>();
-  for (auto& entity : entities) {
-    if (entity->name.compare(my_entity.name) != 0 && entity->name.compare("Tile")) {
-      if (entity->HasComponent<ColliderComponent>()) {
-        ColliderComponent* other_collider = entity->GetComponent<ColliderComponent>();
-        if (Collision::CheckRectangleCollision(my_collider->collider, other_collider->collider)) {
-          return other_collider->collider_tag;
+CollisionType EntityManager::CheckCollisions() const {
+  for (auto& this_entity : entities) {
+    if (this_entity->HasComponent<ColliderComponent>()) {
+      ColliderComponent* this_collider = this_entity->GetComponent<ColliderComponent>();
+      for (auto& that_entity : entities) {
+        if (this_entity->name.compare(that_entity->name) != 0 && that_entity->HasComponent<ColliderComponent>()) {
+          ColliderComponent* that_collider = that_entity->GetComponent<ColliderComponent>();
+          if (Collision::CheckRectangleCollision(this_collider->collider, that_collider->collider)) {
+            if (
+              this_collider->collider_tag.compare("PLAYER") == 0 &&
+              that_collider->collider_tag.compare("ENEMY") == 0
+            ) {
+              return PLAYER_ENEMY_COLLISION;
+            }
+
+            if (
+              this_collider->collider_tag.compare("PLAYER") == 0 &&
+              that_collider->collider_tag.compare("PROJECTILE") == 0
+            ) {
+              return PLAYER_PROJECTILE_COLLISION;
+            }
+
+            if (
+              this_collider->collider_tag.compare("ENEMY") == 0 &&
+              that_collider->collider_tag.compare("FRIENDLY_PROJECTILE") == 0
+            ) {
+              return ENEMY_PROJECTILE_COLLISION;
+            }
+
+            if (
+              this_collider->collider_tag.compare("PLAYER") == 0 &&
+              that_collider->collider_tag.compare("LEVEL_COMPLETE") == 0
+            ) {
+              return PLAYER_LEVEL_COMPLETE_COLLISION;
+            }
+
+          }
         }
       }
     }
   }
-  return std::string();
+  return NO_COLLISION;
+  // ColliderComponent* my_collider = my_entity.GetComponent<ColliderComponent>();
+  // for (auto& entity : entities) {
+  //   if (entity->name.compare(my_entity.name) != 0 && entity->name.compare("Tile")) {
+  //     if (entity->HasComponent<ColliderComponent>()) {
+  //       ColliderComponent* other_collider = entity->GetComponent<ColliderComponent>();
+  //       if (Collision::CheckRectangleCollision(my_collider->collider, other_collider->collider)) {
+  //         return other_collider->collider_tag;
+  //       }
+  //     }
+  //   }
+  // }
+  // return std::string();
 }
