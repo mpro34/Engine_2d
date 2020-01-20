@@ -12,7 +12,7 @@ The following items are todo items that will help improve the overall experience
 
 
 #### Class Diagram for 2D Engine
-![Alt text](https://github.com/mpro34/Engine_2d/blob/master/extra/2D_Engine_Class_Diagram.pdf)
+![Alt text](https://github.com/mpro34/Engine_2d/blob/master/extra/class_diagram.png)
 
 #### The screenshot below shows the starting location for the player, in this case is an animated chopper image. The objective is to get to the "H" helipad while avoiding enemy projectiles (yellow balls) and any other obstacles.
 ![Alt text](https://github.com/mpro34/Engine_2d/blob/master/extra/start_level_new.png)
