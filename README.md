@@ -1,4 +1,4 @@
-# Engine_2d
+# 2D Game Engine
 
 This project is a 2D Game engine using SDL. The game data is configured and loaded with a Lua script.
 
