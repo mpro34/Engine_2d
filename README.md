@@ -4,6 +4,11 @@ This project is a 2D Game engine using SDL. The game data is configured and load
 
 The main entry point to the code base is the Game.cpp file which takes care of the managers, game loop, etc.
 
+### How it works
+The fundamental base class is the Entity class, which everything on the game screen starts off as. The player, enemies and even the tiles all start off as a base Entity class and then various Components are added to each Entity based on what it needs.
+For example, the player Entity has a CollisionComponent so that we can track if anything hits the player. Alternatively, a tile Entity which holds information about a certain tile in the map may or may not have a Collision component so that the player can fly over it.
+
+
 The following items are todo items that will help improve the overall experience of the engine:
 1. Add projectiles to player with space bar to shoot
 2. Optimize loops and other performance tuning.
