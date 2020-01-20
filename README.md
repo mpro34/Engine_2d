@@ -12,3 +12,13 @@ The following items are todo items that will help improve the overall experience
 5. Add map editor
 6. Add screenshots to readme
 7. Add Class Diagram to readme
+
+
+#### Class Diagram for 2D Engine
+![alt text]()
+
+#### The screenshot below shows the starting location for the player, in this case is an animated chopper image. The objective is to get to the "H" helipad while avoiding enemy projectiles (yellow balls) and any other obstacles.
+![alt text](https://github.com/2d_GameEngine/extra/start_level.png)
+
+#### The screenshot below shows the player on its way to the goal and the various types of enemies. There is a camera that follows the main player transform as well!
+![alt text](https://github.com/2d_GameEngine/extra/playing.png))
